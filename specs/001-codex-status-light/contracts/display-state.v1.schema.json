@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-traffic-lights.local/contracts/display-state.v1.schema.json",
+  "title": "Traffic Light Display State",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "display",
+    "label",
+    "accessibility_label",
+    "mapped_meaning",
+    "is_stale",
+    "active_session_count",
+    "waiting_session_count",
+    "working_session_count"
+  ],
+  "properties": {
+    "version": {
+      "const": "1"
+    },
+    "display": {
+      "type": "string",
+      "enum": [
+        "green",
+        "red",
+        "yellow",
+        "unavailable"
+      ]
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "accessibility_label": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "mapped_meaning": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "last_update": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_stale": {
+      "type": "boolean"
+    },
+    "active_session_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "waiting_session_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "working_session_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "unavailable_reason": {
+      "type": "string",
+      "maxLength": 160
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "display": {
+            "const": "yellow"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "last_update"
+        ],
+        "properties": {
+          "waiting_session_count": {
+            "minimum": 1
+          },
+          "is_stale": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "display": {
+            "const": "red"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "last_update"
+        ],
+        "properties": {
+          "waiting_session_count": {
+            "const": 0
+          },
+          "working_session_count": {
+            "minimum": 1
+          },
+          "is_stale": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "display": {
+            "const": "green"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "last_update"
+        ],
+        "properties": {
+          "waiting_session_count": {
+            "const": 0
+          },
+          "working_session_count": {
+            "const": 0
+          },
+          "active_session_count": {
+            "minimum": 1
+          },
+          "is_stale": {
+            "const": false
+          }
+        }
+      }
+    }
+  ]
+}

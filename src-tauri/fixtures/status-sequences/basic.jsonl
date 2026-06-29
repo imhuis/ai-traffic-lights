@@ -1,0 +1,5 @@
+{"version":"1","source":"jsonl-replay","session_id":"demo-1","sequence":1,"observed_at":"2026-06-29T09:00:00Z","state":"idle","freshness":"fresh"}
+{"version":"1","source":"jsonl-replay","session_id":"demo-1","sequence":2,"observed_at":"2026-06-29T09:00:01Z","state":"working","freshness":"fresh"}
+{"version":"1","source":"jsonl-replay","session_id":"demo-1","sequence":3,"observed_at":"2026-06-29T09:00:02Z","state":"waiting_for_confirmation","freshness":"fresh"}
+{"version":"1","source":"jsonl-replay","session_id":"demo-1","sequence":4,"observed_at":"2026-06-29T09:00:03Z","state":"idle","freshness":"fresh"}
+
